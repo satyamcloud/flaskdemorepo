@@ -17,7 +17,7 @@ def index():
 @app.route('/users')
 def users():
     cursor = db.cursor()
-    cursor.execute("SELECT id, name, email FROM users")
+    cursor.execute("SELECT id, name FROM users")
     data = cursor.fetchall()
     return render_template('users.html', users=data)
 

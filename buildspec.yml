@@ -22,7 +22,9 @@ phases:
       - echo "New AMI ID: $AMI_ID"
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo Updating launch template
+      - aws ec2 create-launch-template-version --launch-template-id lt-0430b5d140e6fc111 --source-version 1 --launch-template-data "{\"ImageId\":\"$AMI_ID\"}"
+      - aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-project-asg --launch-template \"LaunchTemplateId=lt-0430b5d140e6fc111,Version=\$Latest\"
 artifacts:
   files:
     - '**/*'
